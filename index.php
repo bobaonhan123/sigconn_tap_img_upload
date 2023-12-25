@@ -1,6 +1,7 @@
 <?php
 header("Content-Type: application/json; charset=UTF-8");
-
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: *");
 $uploadDir = __DIR__ . '/uploads/';
 if (!file_exists($uploadDir)) {
     mkdir($uploadDir, 0777, true);
@@ -15,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['image'])) {
 
     $filePath = $uploadDir . $fileName;
     if (move_uploaded_file($uploadedFile['tmp_name'], $filePath)) {
-        $response = ['status' => 'success', 'message' => 'File uploaded successfully', 'url' => 'uploads/' . $fileName];
+        $response = ['status' => 'success', 'message' => 'File uploaded successfully', 'url' => $fileName];
     } else {
         $response = ['status' => 'error', 'message' => 'Failed to move uploaded file'];
     }
